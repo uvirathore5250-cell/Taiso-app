@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; position: relative; min-height: 100vh; }
         
-        /* CANVAS BACKGROUND FOR NEON PARTICLE NETWORK */
+        /* CANVAS BACKGROUND FOR NEON NETWORK & FLOATING KENZO TEXT */
         #bgCanvas {
             position: fixed;
             top: 0;
@@ -425,7 +425,7 @@
         <div class="footer">KENZO FITNESS • NAVI MUMBAI & PUNE</div>
     </div>
 
-    <!-- HIGH-PERFORMANCE NEON PARTICLE ANIMATION SCRIPT -->
+    <!-- CANVAS ANIMATION SCRIPT (NETWORK + FLOATING TEXT WATERMARK) -->
     <script>
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
@@ -437,9 +437,40 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const particles = [];
-        const particleCount = 45;
+        /* FLOATING TEXT CLASS (KENZO WATERMARK) */
+        class FloatingText {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.size = Math.random() * 40 + 35; // Size between 35px & 75px
+                this.alpha = Math.random() * 0.08 + 0.03; // Subtle opacity
+                this.text = "KENZO";
+            }
 
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < -100) this.x = canvas.width + 100;
+                if (this.x > canvas.width + 100) this.x = -100;
+                if (this.y < -50) this.y = canvas.height + 50;
+                if (this.y > canvas.height + 50) this.y = -50;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.font = `900 ${this.size}px 'Segoe UI', sans-serif`;
+                ctx.fillStyle = `rgba(146, 208, 80, ${this.alpha})`;
+                ctx.shadowColor = '#92d050';
+                ctx.shadowBlur = 12;
+                ctx.fillText(this.text, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        /* PARTICLE NODE CLASS */
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -467,13 +498,19 @@
             }
         }
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
+        const particles = Array.from({ length: 40 }, () => new Particle());
+        const floatingTexts = Array.from({ length: 8 }, () => new FloatingText());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Draw Background Floating Text Watermarks
+            floatingTexts.forEach(txt => {
+                txt.update();
+                txt.draw();
+            });
+
+            // Draw Particle Network
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
