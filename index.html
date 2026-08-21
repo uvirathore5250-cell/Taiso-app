@@ -130,7 +130,7 @@
             text-transform: uppercase;
         }
 
-        /* FREE PREMIUM CLASSES SECTION */
+        /* FREE PREMIUM SERVICES HIGHLIGHT SECTION */
         .free-classes-box {
             background: #111;
             border: 2px solid var(--neon);
@@ -203,13 +203,34 @@
             background-size: 200% auto; 
             animation: flow 4s linear infinite; 
             color: #000; 
-            padding: 50px 20px; 
+            padding: 40px 20px; 
             border-radius: 20px; 
             text-align: center; 
-            box-shadow: 0 10px 30px rgba(146, 208, 80, 0.2);
+            box-shadow: 0 10px 30px rgba(146, 208, 80, 0.25);
         }
-        .offer-card p { font-weight: 800; font-size: 14px; letter-spacing: 2px; }
-        .offer-card h1 { font-size: 46px; font-weight: 900; margin: 10px 0; letter-spacing: -1px; }
+        .offer-title { 
+            font-size: 26px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+        .offer-date-tag {
+            background: #000;
+            color: var(--neon);
+            font-weight: 900;
+            font-size: 13px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .offer-card .limit-tag { font-weight: 800; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; }
+        .offer-card h1 { font-size: 52px; font-weight: 900; margin: 8px 0; letter-spacing: -1px; }
 
         .footer { text-align: center; padding: 30px 10px; opacity: 0.4; font-size: 11px; letter-spacing: 2px; }
     </style>
@@ -261,7 +282,6 @@
                 </div>
             </div>
 
-            <!-- NEW: FREE PREMIUM SERVICES HIGHLIGHT SECTION -->
             <div class="free-classes-box">
                 <div class="free-tag">INCLUDED FOR FREE</div>
                 <h3>PREMIUM GROUP CLASSES</h3>
@@ -349,9 +369,11 @@
         <!-- PAGE 4: OFFERS PAGE -->
         <section id="offers">
             <div class="offer-card">
-                <p>LIMITED PERIOD OFFER</p>
+                <div class="offer-title">KENZO 3RD ANNIVERSARY OFFER</div>
+                <div class="offer-date-tag">OFFER TILL 22 AUGUST 2026</div>
+                <div class="limit-tag">LIMITED PERIOD OFFER</div>
                 <h1>₹17,499/-</h1>
-                <p>ANNUAL GYM MEMBERSHIP</p>
+                <p style="font-weight: 800; font-size: 14px; letter-spacing: 2px;">ANNUAL GYM MEMBERSHIP</p>
             </div>
         </section>
 
