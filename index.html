@@ -9,83 +9,64 @@
             --neon: #92d050; 
             --neon-glossy: linear-gradient(90deg, #92d050 0%, #d4ffaa 50%, #92d050 100%);
             --bg: #050505; 
-            --card: rgba(18, 18, 18, 0.9); 
+            --card: rgba(18, 18, 18, 0.92); 
             --text: #eee; 
         }
         @keyframes flow { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
         
-        /* FLOATING BIGGER GREEN STARS ANIMATION */
-        @keyframes moveStars {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-1200px); }
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; position: relative; min-height: 100vh; }
         
-        /* STARFIELD BACKGROUND */
+        /* GUARANTEED VISIBLE FLOATING SVG STARS */
         .stars-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
             overflow: hidden;
         }
 
-        .stars-medium, .stars-large, .stars-xlarge {
+        .star-svg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2400px;
-            background-repeat: repeat;
-            border-radius: 50%;
+            fill: #92d050;
+            filter: drop-shadow(0px 0px 8px #92d050);
+            animation: floatUp 12s linear infinite;
         }
 
-        /* MEDIUM STARS - 6px */
-        .stars-medium {
-            width: 6px;
-            height: 6px;
-            box-shadow: 
-                10vw 20vh #92d050, 30vw 70vh #d4ffaa, 50vw 30vh #92d050, 75vw 80vh #92d050, 85vw 15vh #d4ffaa,
-                15vw 85vh #92d050, 40vw 95vh #d4ffaa, 65vw 45vh #92d050, 90vw 60vh #92d050;
-            animation: moveStars 35s linear infinite;
-            box-shadow: 0 0 10px #92d050;
-            opacity: 0.85;
+        /* Float & Twinkle Animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.6) rotate(0deg);
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0px 0px 15px #92d050);
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(180deg);
+                opacity: 0;
+            }
         }
 
-        /* LARGE STARS - 10px */
-        .stars-large {
-            width: 10px;
-            height: 10px;
-            box-shadow: 
-                8vw 45vh #92d050, 25vw 85vh #92d050, 58vw 15vh #d4ffaa, 78vw 65vh #92d050,
-                18vw 10vh #d4ffaa, 48vw 60vh #92d050, 88vw 90vh #92d050;
-            animation: moveStars 22s linear infinite;
-            box-shadow: 0 0 15px #92d050, 0 0 25px #92d050;
-            opacity: 0.95;
-        }
-
-        /* EXTRA LARGE STARS - 14px WITH INTENSE NEON GLOW */
-        .stars-xlarge {
-            width: 14px;
-            height: 14px;
-            box-shadow: 
-                15vw 30vh #92d050, 35vw 80vh #d4ffaa, 68vw 25vh #92d050, 82vw 70vh #92d050,
-                5vw 90vh #92d050, 52vw 95vh #92d050;
-            animation: moveStars 14s linear infinite;
-            box-shadow: 0 0 20px #92d050, 0 0 35px #92d050, 0 0 50px #92d050;
-            opacity: 1;
-        }
+        /* Star positions & speed variation */
+        .s1 { left: 8%; animation-duration: 10s; animation-delay: 0s; width: 28px; }
+        .s2 { left: 22%; animation-duration: 14s; animation-delay: 3s; width: 20px; }
+        .s3 { left: 38%; animation-duration: 9s; animation-delay: 1s; width: 32px; }
+        .s4 { left: 55%; animation-duration: 13s; animation-delay: 4s; width: 24px; }
+        .s5 { left: 72%; animation-duration: 11s; animation-delay: 2s; width: 30px; }
+        .s6 { left: 88%; animation-duration: 15s; animation-delay: 5s; width: 22px; }
+        .s7 { left: 15%; animation-duration: 12s; animation-delay: 7s; width: 26px; }
+        .s8 { left: 80%; animation-duration: 10s; animation-delay: 6s; width: 34px; }
 
         input[type="radio"] { display: none; }
         
         header {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             padding: 12px 15px; position: fixed; top: 0; width: 100%;
             z-index: 1000; border-bottom: 2px solid var(--neon);
@@ -120,7 +101,7 @@
             border-color: var(--neon);
         }
         
-        .main-view { margin-top: 80px; padding: 15px; }
+        .main-view { margin-top: 80px; padding: 15px; position: relative; z-index: 1; }
         section { display: none; max-width: 800px; margin: 0 auto; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -158,7 +139,7 @@
             border-left: 5px solid var(--neon); 
             margin-bottom: 20px; 
             list-style-type: square; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
         .bullet-list li { 
             font-size: 14px; 
@@ -178,7 +159,7 @@
             border-left: 5px solid var(--neon); 
             margin-bottom: 20px; 
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
         .info-box h3 { 
             color: #fff; 
@@ -211,7 +192,7 @@
             padding: 22px 15px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(146, 208, 80, 0.2);
+            box-shadow: 0 0 20px rgba(146, 208, 80, 0.25);
         }
         .free-tag {
             background: var(--neon-glossy);
@@ -254,7 +235,7 @@
 
         /* MEMBERSHIP CARDS */
         .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-        .plan-card { background: var(--card); backdrop-filter: blur(8px); border: 1px solid #222; border-radius: 15px; overflow: hidden; border-top: 4px solid var(--neon); box-shadow: 0 4px 20px rgba(0,0,0,0.7); }
+        .plan-card { background: var(--card); backdrop-filter: blur(8px); border: 1px solid #222; border-radius: 15px; overflow: hidden; border-top: 4px solid var(--neon); box-shadow: 0 4px 20px rgba(0,0,0,0.8); }
         .plan-header { background: rgba(22, 22, 22, 0.9); padding: 18px; text-align: center; border-bottom: 1px solid #222; }
         .plan-header h3 { font-size: 18px; color: #fff; margin-bottom: 5px; }
         .plan-header .price { font-size: 28px; font-weight: 900; color: var(--neon); }
@@ -263,7 +244,7 @@
         .service-list li::before { content: "✓ "; color: var(--neon); font-weight: bold; }
 
         /* TABLES */
-        .table-container { background: var(--card); backdrop-filter: blur(8px); padding: 15px; border-radius: 15px; border: 1px solid #222; margin-bottom: 20px; overflow-x: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.7); }
+        .table-container { background: var(--card); backdrop-filter: blur(8px); padding: 15px; border-radius: 15px; border: 1px solid #222; margin-bottom: 20px; overflow-x: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.8); }
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; padding: 10px; color: var(--neon); font-size: 11px; text-transform: uppercase; border-bottom: 2px solid #222; }
         td { padding: 10px; border-bottom: 1px solid #111; font-size: 13px; }
@@ -327,11 +308,17 @@
 </head>
 <body>
 
-    <!-- FLOATING BIGGER GREEN STARS -->
+    <!-- FLOATING SVG STARS BACKGROUND -->
     <div class="stars-container">
-        <div class="stars-medium"></div>
-        <div class="stars-large"></div>
-        <div class="stars-xlarge"></div>
+        <!-- SVG STAR TEMPLATES -->
+        <svg class="star-svg s1" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s2" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s3" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s4" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s5" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s6" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s7" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
+        <svg class="star-svg s8" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/></svg>
     </div>
 
     <!-- NAV RADIO BUTTONS -->
